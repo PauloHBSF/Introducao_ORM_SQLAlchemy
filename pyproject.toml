@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "introducao-orm-sqlalchemy"
+version = "0.1.0"
+description = "Projeto básico para aprender a utilizar SQL Alchemy."
+authors = ["PauloHBSF <paulohbsfilho@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+sqlalchemy = "^2.0.34"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
