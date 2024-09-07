@@ -1,3 +1,8 @@
+from sqlalchemy.orm import sessionmaker
+# Utilizado para abstrair uma Tabela e suas Colunas
+from sqlalchemy import Column, Integer, String, Float
+# Utilizado para abstrair um Schema
+from sqlalchemy.orm import declarative_base, mapped_column
 from sqlalchemy import create_engine, URL
 import psycopg2
 from dotenv import load_dotenv, find_dotenv
@@ -33,20 +38,20 @@ Com a engine configurada, agora podemos
 criar nosso primeiro "Schema" da tabela Produtos,
 utilizando o ORM do SQLAlchemy.
 """
-from sqlalchemy.orm import declarative_base, mapped_column          # Utilizado para abstrair um Schema
-from sqlalchemy import Column, Integer, String, Float               # Utilizado para abstrair uma Tabela e suas Colunas
 
 
 Base = declarative_base()
+
 
 class Produtos(Base):
     __tablename__ = 'dim_products'
     product_id = mapped_column(Integer(), primary_key=True, autoincrement=True)
     product_name = mapped_column(String(50), nullable=False)
     unitary_price = mapped_column(Float())
-    
+
+
 Base.metadata.create_all(engine)
-    
+
 """
 Com nossa tabela criada, podemos criar
 nossos primeiros registros a serem
@@ -54,13 +59,13 @@ inseridos na tabela.
 """
 
 p1 = Produtos(
-    product_name = 'Processor AMD Ryzen 5 5600X @ 4.2 GHz',
-    unitary_price = 899.90
+    product_name='Processor AMD Ryzen 5 5600X @ 4.2 GHz',
+    unitary_price=899.90
 )
 
 p2 = Produtos(
-    product_name = 'Processor AMD Ryzen 9 5950X @ 4.9 GHz',
-    unitary_price = 2799.90
+    product_name='Processor AMD Ryzen 9 5950X @ 4.9 GHz',
+    unitary_price=2799.90
 )
 
 """
@@ -69,7 +74,6 @@ executará a Query abstraida e realizará
 o commit no banco
 """
 
-from sqlalchemy.orm import sessionmaker
 
 Session = sessionmaker(bind=engine)
 
@@ -78,6 +82,6 @@ try:
         session.add(p1)
         session.add(p2)
         session.commit()
-        
+
 except Exception as e:
     print(e)
